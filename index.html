@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>配送管理システム</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+
+    <style>
+        body {
+            /* 背景色の変更（例：落ち着いた薄いグレー） */
+            background-color: #f4f7f6; 
+            
+            /* 左右に48pxの余白を作る */
+            padding-left: 48px;
+            padding-right: 48px;
+            
+            /* Water.cssの標準幅制限を解除して画面端まで使う場合 */
+            max-width: 100%; 
+            
+            /* 文字色を背景に合わせる（必要に応じて） */
+            color: #333;
+        }
+
+        /* コンテンツがバラバラにならないよう、中身を少し整える */
+        section {
+            background: white; /* コンテンツ部分だけ白くする（カード風） */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📦 配送管理システム</h1>
+    
+    <header style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>📦 配送状況リスト</h1>
+        <a href="/add_page"><button>＋ 新規荷物を登録する</button></a>
+    </header>
+
+    <hr>
+
+    <section>
+        <h2>配送状況リスト</h2>
+        <table>
+            <thead>
+                <tr>
+                <th>ID</th>
+                <th>荷物名</th>
+                <th>ステータス</th>
+                <th>操作</th> </tr>
+            </thead>
+            <tbody>
+                {% for delivery in deliveries %}
+                    <tr>
+                        <td>{{ delivery[0] }}</td>
+                        <td><strong>{{ delivery[1] }}</strong></td>
+                        <td>
+                            {% if delivery[2] == 'done' %}
+                            <span style="color: #2ecc71;">✅ 完了</span>
+                            {% else %}
+                            <code>{{ delivery[2] }}</code>
+                            {% endif %}
+                        </td>
+                        <td style="display: flex; gap: 5px;">
+                            {% if delivery[2] == 'pending' %}
+                            <form action="/update/{{ delivery[0] }}" method="post">
+                                <button type="submit" style="background-color: #2ecc71; border-color: #2ecc71; padding: 5px 10px;">完了</button>
+                            </form>
+                            {% endif %}
+
+                            <form action="/delete/{{ delivery[0] }}" method="post">
+                                <button type="submit" style="background-color: #ff4444; border-color: #ff4444; padding: 5px 10px;">削除</button>
+                            </form>
+                        </td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</body>
+</html>

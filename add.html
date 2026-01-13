@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>新規荷物登録</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+</head>
+<body>
+    <h1>📦 新規荷物登録</h1>
+    <form action="/add" method="post">
+        <label>荷物名</label>
+        <input type="text" name="item_name" placeholder="例：りんご" required>
+        
+        <label>配達先住所</label>
+        <input type="text" name="address" placeholder="例：東京都渋谷区...">
+        
+        <label>配達期日</label>
+        <input type="date" name="deadline">
+        
+        <button type="submit">この内容で登録する</button>
+        <a href="/" style="margin-left: 10px;">戻る</a>
+    </form>
+</body>
+</html>
