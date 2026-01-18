@@ -32,11 +32,16 @@ def create_table():
         cur = conn.cursor()
         
         # 3. テーブル作成のSQLを実行
+        # db.py の create_table 関数内を修正
+        cur.execute("DROP TABLE IF EXISTS deliveries;")
+        
         create_query = """
         CREATE TABLE IF NOT EXISTS deliveries (
             id SERIAL PRIMARY KEY,
             item_name VARCHAR(100) NOT NULL,
-            status VARCHAR(20) DEFAULT 'pending',
+            address VARCHAR(255),
+            status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'shipping', 'done')),
+            deadline DATE,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """
@@ -67,4 +72,4 @@ def insert_data(item_name):
 
 if __name__ == "__main__":
     create_table()
-conn = get_connection()
+    conn = get_connection()
