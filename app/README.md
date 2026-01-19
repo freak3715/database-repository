@@ -32,7 +32,6 @@ add.html: 新規荷物登録画面。<br>
 ステータスの種類と表示名を定義します。<br>
 status_code: 'pending', 'shipping', 'done' (PK)<br>
 display_name: '待機中', '運搬中', '完了'</p>
-
 2. deliveries (トランザクションテーブル)</p>
 具体的な配送データを保持します。<br>
 id: シリアル番号 (PK)<br>
@@ -41,6 +40,7 @@ address: 配達先住所<br>
 deadline: 配達期日 (DATE)<br>
 
 status: 現在のステータス (FK: statuses.status_code)
+
 
 
 
