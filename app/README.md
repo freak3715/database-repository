@@ -1,4 +1,4 @@
-<h3>**配送管理システム (Delivery Management System)**</h3>
+<h2>配送管理システム (Delivery Management System)</h2>
 Python (Flask) と PostgreSQL を使用した、シンプルで使いやすい配送状況管理アプリケーションです。</p>
 
 **主な機能**</p>
@@ -43,6 +43,7 @@ address: 配達先住所
 deadline: 配達期日 (DATE)
 
 status: 現在のステータス (FK: statuses.status_code)
+
 
 
 
