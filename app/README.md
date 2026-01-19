@@ -9,9 +9,10 @@ Python (Flask) と PostgreSQL を使用した、シンプルで使いやすい�
 レスポンシブデザイン: water.css を採用した、シンプルで清潔感のあるUI。
 
 **使用技術**</p>
-Backend: Python 3.x / FlaskDatabase: 
-PostgreSQLLibrary: psycopg2 (Database Driver)
-Frontend: HTML5 / Jinja2 / water.css
+Backend: Python 3.x Flask</p>
+Database: Postgre</p>
+SQLLibrary: psycopg2 (Database Driver)</p>
+Frontend: HTML5 / Jinja2 / water.css</p>
 
 **セットアップ手順**</p>
 1. データベースの準備PostgreSQLで delivery_db という名前のデータベースを作成してください。（接続設定は db.py 内のパラメータを適宜変更してください）
@@ -22,13 +23,13 @@ Frontend: HTML5 / Jinja2 / water.css
 起動後、ブラウザで http://127.0.0.1:5000 にアクセスしてください。
 
 **ファイル構成** </p>
-main.py: Flaskのルート定義、ビジネスロジック。
-db.py: データベース接続設定、テーブル作成スクリプト。
-templates/index.html: 配送リスト一覧、検索、ステータス変更画面。
-add.html: 新規荷物登録画面。
+main.py: Flaskのルート定義、ビジネスロジック。</p>
+db.py: データベース接続設定、テーブル作成スクリプト。</p>
+templates/index.html: 配送リスト一覧、検索、ステータス変更画面。</p>
+add.html: 新規荷物登録画面。</p>
 
 **データベース設計 (ER図)**</p>
-本システムは2つのテーブルを紐付けて管理しています。
+本システムは2つのテーブルを紐付けて管理しています。</p>
 1. statuses (マスタテーブル)
 ステータスの種類と表示名を定義します。
 status_code: 'pending', 'shipping', 'done' (PK)
@@ -42,6 +43,7 @@ address: 配達先住所
 deadline: 配達期日 (DATE)
 
 status: 現在のステータス (FK: statuses.status_code)
+
 
 
 
