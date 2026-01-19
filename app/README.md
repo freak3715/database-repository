@@ -16,9 +16,7 @@ Frontend: HTML5 / Jinja2 / water.css<br>
 
 <h3>セットアップ手順</h3>
 1. データベースの準備PostgreSQLで delivery_db という名前のデータベースを作成してください。（接続設定は db.py 内のパラメータを適宜変更してください）
-
 2. テーブルの作成・初期化初回実行時、またはデータベース構造を変更した際は、以下のコマンドを実行してテーブルを生成します。注意: この操作により既存のデータは一度リセットされます。Bashpython db.py
-
 3. アプリケーションの起動Bashpython main.py
 起動後、ブラウザで http://127.0.0.1:5000 にアクセスしてください。
 
@@ -34,7 +32,6 @@ add.html: 新規荷物登録画面。<br>
 ステータスの種類と表示名を定義します。
 status_code: 'pending', 'shipping', 'done' (PK)
 display_name: '待機中', '運搬中', '完了'
-
 2. deliveries (トランザクションテーブル)
 具体的な配送データを保持します。
 id: シリアル番号 (PK)
@@ -43,6 +40,7 @@ address: 配達先住所
 deadline: 配達期日 (DATE)
 
 status: 現在のステータス (FK: statuses.status_code)
+
 
 
 
