@@ -15,7 +15,7 @@ SQLLibrary: psycopg2 (Database Driver)<br>
 Frontend: HTML5 / Jinja2 / water.css<br>
 
 <h3>セットアップ手順</h3>
-1. データベースの準備PostgreSQLで delivery_db という名前のデータベースを作成してください。（接続設定は db.py 内のパラメータを適宜変更してください）<br>
+1. データベースの準備PostgreSQLで <code>delivery_db</code> という名前のデータベースを作成してください。（接続設定は <code>db.py</code> 内のパラメータを適宜変更してください）<br>
 2. テーブルの作成・初期化初回実行時、またはデータベース構造を変更した際は、以下のコマンドを実行してテーブルを生成します。注意: この操作により既存のデータは一度リセットされます。Bashpython <code>db.py</code><br>
 3. アプリケーションの起動Bashpython main.py <br>
 起動後、ブラウザで http://127.0.0.1:5000 にアクセスしてください。<br>
@@ -40,6 +40,7 @@ address: 配達先住所<br>
 deadline: 配達期日 (DATE)<br>
 
 status: 現在のステータス (FK: statuses.status_code)
+
 
 
 
