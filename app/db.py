@@ -33,7 +33,6 @@ def create_table():
         
         # 3. テーブル作成のSQLを実行
         # db.py の create_table 関数内を修正
-        cur.execute("DROP TABLE IF EXISTS deliveries;")
         
         create_query = """
         -- 1. ステータス定義テーブル
