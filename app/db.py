@@ -50,6 +50,7 @@ def create_table():
             deadline DATE,
             -- statusを外部キーに変更 (statusesテーブルのstatus_codeを参照)
             status VARCHAR(20) DEFAULT 'pending' REFERENCES statuses(status_code),
+            search_info TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
 

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from db import get_connection, create_table
 from datetime import date # 1. 文頭のインポートに追加
+from pykakasi import kakasi
 
 app = Flask(__name__)
 
@@ -33,7 +34,8 @@ def index():
             
             # 検索機能（荷物名または住所）
             if query:
-                sql += " AND (d.item_name ILIKE %s OR d.address ILIKE %s)"
+                # item_nameの代わりに search_info を検索対象にする
+                sql += " AND (d.search_info ILIKE %s OR d.address ILIKE %s)"
                 params.extend([f"%{query}%", f"%{query}%"])
             
             # ステータス絞り込み機能
@@ -57,17 +59,20 @@ def index():
         today=date.today()
     )
 
-@app.route('/add', methods=['POST'])
+app.route('/add', methods=['POST'])
 def add():
     item_name = request.form.get('item_name')
     address = request.form.get('address')
-    deadline = request.form.get('deadline') # 追加
+    deadline = request.form.get('deadline')
+
+    # ★ここで自動変換を実行
+    search_info = generate_search_info(item_name)
+
     with get_connection() as conn:
         with conn.cursor() as cur:
-            # deadline も SQL に含める
             cur.execute(
-                "INSERT INTO deliveries (item_name, address, deadline) VALUES (%s, %s, %s)", 
-                (item_name, address, deadline)
+                "INSERT INTO deliveries (item_name, address, deadline, search_info) VALUES (%s, %s, %s, %s)",
+                (item_name, address, deadline, search_info)
             )
             conn.commit()
     return redirect('/')
@@ -97,29 +102,63 @@ def add_page():
 
 @app.route('/bulk_update', methods=['POST'])
 def bulk_update():
-    # チェックされたIDのリストを取得
+    # 1. チェックされたIDのリストを取得（この時点では文字列のリスト ['1', '2', ...]）
     selected_ids = request.form.getlist('item_ids')
     
     if not selected_ids:
         return redirect('/')
 
-    conn = get_connection()
+    # 2. 文字列のリストを数値（整数）のリストに変換する
+    # これにより 'integer = text' のエラーを回避します
     try:
-        # トランザクション開始
-        with conn:
+        int_ids = [int(id) for id in selected_ids]
+    except ValueError:
+        return redirect('/') # IDが数値として解釈できない場合
+
+    try:
+        with get_connection() as conn:
             with conn.cursor() as cur:
-                # SQLの IN 句を使って一括更新
+                # 3. 数値に変換したリストを使って一括更新
                 cur.execute(
                     "UPDATE deliveries SET status = 'done' WHERE id = ANY(%s)",
-                    (selected_ids,)
+                    (int_ids,)
                 )
-        # ブロックを抜けると自動で commit される
+                conn.commit()
     except Exception as e:
         print(f"一括更新エラー: {e}")
-    finally:
-        conn.close()
         
     return redirect('/')
+
+def generate_search_info(text):
+    kks = kakasi()
+    result = kks.convert(text)
+    # ひらがな、カタカナ、ローマ字を抽出して1つの文字列にまとめる
+    hira = "".join([item['hira'] for item in result])
+    kana = "".join([item['kana'] for item in result])
+    romaji = "".join([item['hepburn'] for item in result])
+    
+    # 検索で見つかりやすいようにスペース区切りで結合
+    return f"{text} {hira} {kana} {romaji}"
+
+@app.route('/add', methods=['POST'])
+def add():
+    item_name = request.form.get('item_name')
+    address = request.form.get('address')
+    deadline = request.form.get('deadline')
+
+    # 検索用情報の生成
+    search_info = generate_search_info(item_name)
+
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            # search_infoも一緒に保存する
+            cur.execute(
+                "INSERT INTO deliveries (item_name, address, deadline, search_info) VALUES (%s, %s, %s, %s)",
+                (item_name, address, deadline, search_info)
+            )
+            conn.commit()
+    return redirect('/')
+        
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
