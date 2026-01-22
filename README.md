@@ -12,7 +12,7 @@ Python (Flask) と PostgreSQL を使用した、シンプルで使いやすい�
 <h3>使用技術</h3>
 Backend: Python 3.x Flask<br>
 Database: Postgre<br>
-SQLLibrary: psycopg2 (Database Driver)<br>
+Libraries: psycopg2, pykakasi (Database Driver)<br>
 Frontend: HTML5 / Jinja2 / water.css<br>
 
 <h3>セットアップ手順</h3>
