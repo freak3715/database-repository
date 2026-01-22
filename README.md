@@ -17,7 +17,7 @@ Frontend: HTML5 / Jinja2 / water.css<br>
 
 <h3>セットアップ手順</h3>
 1. データベースの準備PostgreSQLで <code>delivery_db</code> という名前のデータベースを作成してください。（接続設定は <code>db.py</code> 内のパラメータを適宜変更してください）<br>
-2. ライブラリのインストール <code>pip install flask psycopg2 pykakasi</code> <br>
+2. ライブラリのインストール <code>pip install flask psycopg2 pykakasi</code>を実行してライブラリーをインストールします。 <br>
 3. テーブルの作成・初期化初回実行時、またはデータベース構造を変更した際は、<code>python main.py</code>を実行してテーブルを生成します。<br>
 注意: この操作により既存のデータは一度リセットされます。<br>
 3. <code>main.py </code>起動後、ブラウザで[http://127.0.0.1:5000] にアクセスしてください。<br>
@@ -40,7 +40,7 @@ Frontend: HTML5 / Jinja2 / water.css<br>
 <code>item_name</code>: 荷物名<br>
 <code>addres</code>s: 配達先住所<br>
 <code>deadline</code>: 配達期日 (DATE)<br>
-<code>search_info</code>【重要】 検索効率化のための正規化テキスト（後述）
+<code>search_info</code>【重要】 検索効率化のための正規化テキスト<br>
 <code>status</code>: 現在のステータス (FK: statuses.status_code)
 
 
